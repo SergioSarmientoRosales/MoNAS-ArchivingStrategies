@@ -78,4 +78,62 @@ Each strategy is treated as a **representation model** for Pareto front approxim
 - **ε-indicator** — approximation bounds  
 - **Hausdorff distance** — worst-case geometric deviation  
 
+MoNAS-OfflineArchiving/
+│
+├── README.md
+├── LICENSE
+├── requirements.txt
+│
+├── data/
+│ ├── raw/ # raw NAS outputs
+│ ├── processed/ # deduplicated & normalized cloud
+│
+├── predictors/ # performance predictors
+├── search/ # NAS search algorithms
+├── archivers/ # offline archiving strategies
+├── evaluation/ # metrics and indicators
+├── visualization/ # plots and Pareto visualizations
+├── configs/ # experimental configurations
+├── experiments/ # reproducible experiment scripts
+│
+└── paper/
+├── figures/
+├── tables/
+└── manuscript.pdf
+
+
+## Reproducibility
+
+The framework ensures:
+
+- Deterministic input ordering
+- Global deduplication
+- Fixed normalization
+- Reference-front grounding
+- Controlled truncation regimes
+- Seed-controlled experiments
+- Fully reproducible archive construction
+
+
+## Research Goals
+
+This project supports:
+
+- Structural analysis of Pareto representations
+- Paradigm-level comparison of archiving strategies
+- Controlled compression analysis
+- Representation-driven NAS evaluation
+- Practical reduction of retraining cost
+- Deployment-oriented NAS design
+
+## Citation
+
+If you use this code or framework in your research, please cite:
+
+@article{Archiving2026OfflineArchiving,
+title = {An Offline Analysis of Pareto Archiving Strategies in Multiobjective Neural Architecture Search for Super-Resolution Image Restoration},
+author = {Sarmiento-Rosales, Sergio et al.},
+journal = {TBD},
+year = {2026}
+}
 
