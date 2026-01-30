@@ -2,15 +2,11 @@
 Reproducible framework for offline analysis of Pareto archiving strategies in MoNAS. Includes global solution cloud construction, reference front generation, controlled compression, and structural evaluation of representations. Enables compact Pareto approximations and reduces the number of architectures requiring full retraining.
 
 
-# MoNAS-OfflineArchiving
-
 This repository contains the code and experimental framework for the paper:
 
 **“An Offline Analysis of Pareto Archiving Strategies in Multiobjective Neural Architecture Search for Super-Resolution Image Restoration”**
 
 The project provides a large-scale, reproducible framework for analyzing offline archiving strategies in multi-objective neural architecture search (MoNAS), with a focus on representation, compression, and structural approximation of Pareto fronts in super-resolution image restoration (SRIR).
-
----
 
 ## Overview
 
