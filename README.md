@@ -78,30 +78,6 @@ Each strategy is treated as a **representation model** for Pareto front approxim
 - **ε-indicator** — approximation bounds  
 - **Hausdorff distance** — worst-case geometric deviation  
 
-MoNAS-OfflineArchiving/
-│
-├── README.md
-├── LICENSE
-├── requirements.txt
-│
-├── data/
-│ ├── raw/ # raw NAS outputs
-│ ├── processed/ # deduplicated & normalized cloud
-│
-├── predictors/ # performance predictors
-├── search/ # NAS search algorithms
-├── archivers/ # offline archiving strategies
-├── evaluation/ # metrics and indicators
-├── visualization/ # plots and Pareto visualizations
-├── configs/ # experimental configurations
-├── experiments/ # reproducible experiment scripts
-│
-└── paper/
-├── figures/
-├── tables/
-└── manuscript.pdf
-
-
 ## Reproducibility
 
 The framework ensures:
