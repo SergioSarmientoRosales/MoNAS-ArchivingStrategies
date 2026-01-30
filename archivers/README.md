@@ -1,4 +1,4 @@
-Archivers Module
+## Archivers Module
 
 This directory contains the core implementation of the **offline archiving framework** used in the paper.  
 It defines the logic for constructing, filtering, truncating, and analyzing Pareto archives from a globally deduplicated solution cloud.
@@ -6,7 +6,7 @@ It defines the logic for constructing, filtering, truncating, and analyzing Pare
 The module is designed around a **central orchestration component** (`brain.py`) that coordinates multiple archiving strategies and a set of helper utilities that ensure deterministic, reproducible, and structurally consistent archive construction.
 
 
-Core Design Philosophy
+## Core Design Philosophy
 
 
 The module separates:
@@ -15,7 +15,6 @@ The module separates:
 - **Supporting utilities** (data handling, normalization, plotting, and record management).
 
 
----
 
 ##  `brain.py` — Central Orchestrator
 
