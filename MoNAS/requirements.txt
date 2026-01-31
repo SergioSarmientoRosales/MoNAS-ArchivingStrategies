@@ -1,0 +1,15 @@
+numpy<2.0.0
+scipy
+pandas
+
+# TensorFlow CPU compatible
+tensorflow==2.15.0
+
+# La versión que entrenó tu modelo (según tu warning)
+scikit-learn==1.7.2
+
+xgboost
+joblib
+tqdm
+matplotlib
+seaborn

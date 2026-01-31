@@ -1,0 +1,6 @@
+Net,PSNR,Params,Generation,Model,Seed,SourceFile,PSNR_N,Params_N
+"[1, 7, 5, 5, 7, 6, 3, 6, 4, 0, 0, 0, 5, 7, 6, 7, 6, 6, 1, 1, 2, 0, 4, 2, 4, 1, 2, 4]",34.711242,112032.0,372,et,15,G:\Mi unidad\Paper2\Seeds\mse_Reduced\et\et_converted_seed_15.csv,1.0,0.020878732910483193
+"[0, 7, 4, 4, 7, 1, 4, 7, 3, 2, 7, 1, 3, 7, 5, 4, 7, 5, 1, 7, 4, 4, 7, 4, 0, 7, 5, 4]",33.079383,2272.0,137,rf,1,G:\Mi unidad\Paper2\Seeds\mse_Reduced\rf\rf_converted_seed_1.csv,0.7836436366442298,0.0
+"[0, 7, 3, 4, 7, 0, 3, 7, 3, 2, 7, 1, 4, 7, 5, 7, 7, 4, 4, 7, 1, 2, 3, 4, 0, 7, 5, 4]",33.304489,2544.0,224,svr,20,G:\Mi unidad\Paper2\Seeds\mse_Reduced\svr\svr_converted_seed_20.csv,0.8134888104794468,5.174030021548313e-05
+"[0, 7, 3, 4, 7, 0, 3, 7, 3, 2, 7, 1, 5, 3, 4, 4, 7, 4, 4, 7, 1, 2, 3, 4, 0, 7, 5, 3]",33.360995,2816.0,212,svr,20,G:\Mi unidad\Paper2\Seeds\mse_Reduced\svr\svr_converted_seed_20.csv,0.8209805316807163,0.00010348060043096626
+"[4, 7, 2, 4, 7, 4, 5, 7, 2, 1, 7, 1, 2, 7, 7, 4, 7, 5, 1, 7, 3, 2, 2, 0, 1, 3, 4, 4]",33.479364,3088.0,331,svr,17,G:\Mi unidad\Paper2\Seeds\mse_Reduced\svr\svr_converted_seed_17.csv,0.8366742199062663,0.0001552209006464494
