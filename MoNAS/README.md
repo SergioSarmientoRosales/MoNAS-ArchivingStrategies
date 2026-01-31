@@ -70,6 +70,38 @@ After MoNAS:
 This two-stage predictor strategy decouples exploration efficiency from representation accuracy.
 
 
+## Dockerfile
+
+The `Dockerfile` is used to create a reproducible execution environment using Docker.
+
+Its main purposes are:
+- To ensure that the experiments always run with the same Python version and dependencies.
+- To simplify execution on cloud platforms, especially **Microsoft Azure**.
+- To avoid dependency and configuration issues when running multiple experiments.
+
+Once the container is built and started, it automatically runs the main experiment script.
+
+## run_all_seeds.py
+
+The `run_all_seeds.py` file is responsible for launching multiple independent experiments using different random seeds.
+
+This script:
+- Executes several runs of the main MoNAS algorithm.
+- Runs experiments in parallel to reduce total execution time.
+- Groups executions to avoid overloading the system.
+
+Each run uses a different seed and stores its results separately, allowing the analysis of variability and consistency across runs.
+
+
+## Execution Workflow
+
+1. The Docker container prepares the execution environment.
+2. `run_all_seeds.py` automatically starts the experiments.
+3. Each seed runs the NAS algorithm independently.
+4. Results are stored for later analysis.
+
+This setup allows experiments to be executed automatically, reproducibly, and efficiently, both on local machines and cloud infrastructure.
+
 ## Research Context
 
 This module supports:
@@ -77,6 +109,13 @@ This module supports:
 - Efficient MoNAS under limited computational budgets
 - Generation of rich solution clouds for offline archiving
 - Controlled and reproducible NAS experiments
+
+## Microsoft Azure Initiative
+
+This work was developed in the context of experiments executed on **Microsoft Azure**, supported by the initiative **Microsoft’s AI for Cultural Heritage**.
+
+This initiative aims to provide cloud computing resources and tools to support research projects that apply artificial intelligence to scientific, cultural, and technological challenges. Azure infrastructure was used to enable scalable and parallel execution of experiments in a reproducible manner.
+
 
 
 ## Notes
