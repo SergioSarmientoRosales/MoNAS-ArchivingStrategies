@@ -1,115 +1,228 @@
 # MoNAS-ArchivingStrategies
-Reproducible framework for offline analysis of Pareto archiving strategies in MoNAS. Includes global solution cloud construction, reference front generation, controlled compression, and structural evaluation of representations. Enables compact Pareto approximations and reduces the number of architectures requiring full retraining.
 
+Reproducible offline analysis framework for Pareto archiving strategies in multi-objective neural architecture search (MoNAS) for super-resolution image restoration.
 
-This repository contains the code and experimental framework for the paper:
+This repository supports the work:
 
-**“An Offline Analysis of Pareto Archiving Strategies in Multiobjective Neural Architecture Search for Super-Resolution Image Restoration”**
+**An Offline Analysis of Pareto Archiving Strategies in Multiobjective Neural Architecture Search for Super-Resolution Image Restoration**
+Sarmiento-Rosales, Sergio et al. Journal/status: TBD, 2026.
 
-The project provides a large-scale, reproducible framework for analyzing offline archiving strategies in multi-objective neural architecture search (MoNAS), with a focus on representation, compression, and structural approximation of Pareto fronts in super-resolution image restoration (SRIR).
+The repository now includes a clean, lightweight Python pipeline that an external researcher can run from a fresh clone, plus the original historical MoNAS, seed, model, and result artifacts for traceability.
 
-## Overview
+## Scientific Motivation
 
-Multi-objective NAS generates large sets of candidate architectures and Pareto-optimal solutions.  
-Even when a Pareto front is obtained, retraining all non-dominated architectures remains computationally infeasible in large-scale settings.
+Multi-objective NAS often produces large sets of candidate architectures. Even after identifying non-dominated architectures, retraining or inspecting every candidate can be expensive. Offline Pareto archiving studies how to represent a large solution cloud with a smaller archive while preserving useful front structure.
 
-This repository implements an **offline archiving framework** that:
+This project treats archiving as a reproducible representation problem:
 
-- Constructs a **globally deduplicated solution cloud**
-- Builds a **reference Pareto front**
-- Applies multiple **offline archiving strategies** as controlled approximations
-- Evaluates compression under multiple **truncation regimes**
-- Enables **compact Pareto representations**, reducing the number of architectures that require full retraining
-- Supports **reproducible, paradigm-level comparison** of archiving strategies
+1. Build or load a global solution cloud.
+2. Deduplicate architectures.
+3. Normalize objectives with explicit directions.
+4. Construct an empirical reference Pareto front.
+5. Apply archiving and truncation strategies.
+6. Evaluate approximations with multi-objective indicators.
+7. Save tables and plots for inspection.
 
-Offline archiving is treated as a **representation and compression problem**, not merely a selection mechanism.
+## Repository Structure
 
-## Archiving Paradigms Implemented
+| Path | Purpose |
+| --- | --- |
+| `src/monas_archiving/` | Clean package for data validation, normalization, Pareto utilities, archivers, indicators, plotting, and pipeline execution. |
+| `configs/` | YAML configs for the toy example and a full-pipeline template. |
+| `scripts/` | Command-line entry points for each pipeline stage and one unified runner. |
+| `examples/` | Small runnable examples and toy input data. |
+| `docs/` | Audit notes, data format, pipeline guide, archiver guide, indicator guide, and reproduction guide. |
+| `tests/` | Lightweight pytest suite for core logic and smoke execution. |
+| `data/` | Placeholder for external full input data. |
+| `runs/` | Placeholder for generated outputs from the cleaned pipeline. |
+| `archivers/` | Original legacy archiving scripts, preserved for traceability. |
+| `Multi-Objetive Analysis/` | Original legacy metric/plotting scripts. |
+| `MoNAS/` | Original NAS and predictor-training scripts. |
+| `Seeds/` | Historical seed-level raw and processed CSV artifacts. |
+| `Results/` | Historical result artifacts from the original repository. |
+| `requirements.txt` | Lightweight dependencies for the cleaned pipeline, tests, examples, and CI. |
+| `requirements-legacy.txt` | Original heavier dependency snapshot for legacy NAS/predictor scripts. |
 
-The framework includes representative strategies from multiple paradigms:
+## Installation
 
-- **Exact dominance:** PQ
-- **Geometric quality indicators:** Hypervolume (HV)
-- **Preference-space indicators:** R2
-- **Local density regulation:** Crowding Distance
-- **Spatial discretization:** Grid-based archiving
-- **Tolerance-based discretization:** Epsilon-dominance (Eps1)
-- **Structure-preserving strategies:** Tight1
-- **Geometric clustering:** K-means
-- **Information-theoretic selection:** Entropy-based archiving
+```bash
+git clone https://github.com/SergioSarmientoRosales/MoNAS-ArchivingStrategies.git
+cd MoNAS-ArchivingStrategies
+python -m venv .venv
+.venv\Scripts\activate
+pip install -r requirements.txt
+pip install -e .
+```
 
-Each strategy is treated as a **representation model** for Pareto front approximation.
+On macOS/Linux:
 
-## Core Pipeline
+```bash
+python -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+pip install -e .
+```
 
-1. **Search phase**
-   - Multi-objective NAS using NSGA-III
-   - Predictor-guided evaluation
-   - Large-scale architecture exploration
+The cleaned pipeline does not require TensorFlow, XGBoost, or GPU access. Those heavier dependencies are only needed for some legacy NAS/predictor scripts and are listed in `requirements-legacy.txt`.
 
-2. **Global solution cloud construction**
-   - Aggregation across predictors and random seeds
-   - Deduplication by chromosome identity
-   - Global normalization
+## Quickstart
 
-3. **Reference front construction**
-   - Exact dominance filtering (PQ archiver)
-   - Reference Pareto front used as empirical ground truth
+Run the full toy pipeline:
 
-4. **Offline archiving**
-   - Controlled application of archivers
-   - Deterministic input ordering
-   - Paradigm-level representation
+```bash
+python scripts/run_pipeline.py --config configs/toy_example.yaml
+```
 
-5. **Controlled truncation**
-   - Relative archive sizes: 75%, 50%, 25%
-   - Structural compression regimes
+Expected outputs:
 
-6. **Evaluation**
-   - IGD+, HV, R2, ε-indicator, Hausdorff distance
-   - Structural and geometric analysis
-   - Quantitative comparison
+```text
+runs/toy_example/
+  config_used.yaml
+  solution_cloud.csv
+  reference_front.csv
+  archives/
+  metrics/archive_metrics.csv
+  figures/
+```
+
+Run the minimal example script:
+
+```bash
+python examples/minimal_toy_example.py
+```
+
+Run all tests:
+
+```bash
+pytest tests/
+```
+
+## Step-by-Step Pipeline
+
+Each stage can be run independently:
+
+```bash
+python scripts/01_build_solution_cloud.py --config configs/toy_example.yaml
+python scripts/02_build_reference_front.py --config configs/toy_example.yaml
+python scripts/03_run_archivers.py --config configs/toy_example.yaml
+python scripts/04_evaluate_archives.py --config configs/toy_example.yaml
+python scripts/05_generate_plots.py --config configs/toy_example.yaml
+```
+
+Or run everything:
+
+```bash
+python scripts/run_pipeline.py --config configs/toy_example.yaml
+```
+
+## Input Data Format
+
+The default configs expect a CSV with:
+
+| Column | Required | Default direction | Meaning |
+| --- | --- | --- | --- |
+| `architecture_id` | yes | n/a | Stable architecture identifier. |
+| `chromosome` | recommended | n/a | Architecture encoding for traceability. |
+| `psnr` | yes | maximize | Restoration quality objective. |
+| `params` | yes | minimize | Model-size objective. |
+| `model` | optional | n/a | Predictor or source model. |
+| `seed` | optional | n/a | Experimental seed. |
+| `generation` | optional | n/a | NAS generation. |
+
+Objective directions are explicit in YAML:
+
+```yaml
+objectives:
+  - column: psnr
+    direction: maximize
+  - column: params
+    direction: minimize
+```
+
+The pipeline converts every objective to normalized minimization form. After normalization, lower values are better for all `norm_*` columns.
+
+See [docs/data_format.md](docs/data_format.md) for full details.
+
+## Implemented Archivers
+
+The cleaned pipeline implements deterministic, lightweight versions of:
+
+- `pq`: exact non-dominated archive with crowding truncation.
+- `hv`: greedy hypervolume-oriented archive.
+- `r2`: greedy R2-oriented archive.
+- `crowding`: crowding-distance truncation.
+- `grid`: grid-based archiving.
+- `epsilon`: epsilon-box archiving.
+- `tight1`: structure-preserving farthest-point selection.
+- `kmeans`: seeded k-means representative selection.
+- `entropy`: grid-rarity selection.
+
+See [docs/archivers.md](docs/archivers.md).
 
 ## Evaluation Indicators
 
-- **IGD+** — convergence and coverage consistency  
-- **Hypervolume (HV)** — global dominance quality  
-- **R2** — preference-space representativeness  
-- **ε-indicator** — approximation bounds  
-- **Hausdorff distance** — worst-case geometric deviation  
+The cleaned pipeline reports:
 
-## Reproducibility
+| Indicator | Direction |
+| --- | --- |
+| `igd_plus` | lower is better |
+| `hypervolume` | higher is better |
+| `r2` | lower is better |
+| `epsilon` | lower is better |
+| `hausdorff` | lower is better |
 
-The framework ensures:
+See [docs/indicators.md](docs/indicators.md).
 
-- Deterministic input ordering
-- Global deduplication
-- Fixed normalization
-- Reference-front grounding
-- Controlled truncation regimes
-- Seed-controlled experiments
-- Fully reproducible archive construction
+## Full Reproduction
 
+Use `configs/full_pipeline_template.yaml` as a starting point:
 
-## Research Goals
+1. Copy the template.
+2. Place or generate the full solution-cloud CSV at the configured `input_path`.
+3. Confirm objective columns, directions, deduplication key, archivers, and truncation sizes.
+4. Run:
 
-This project supports:
+```bash
+python scripts/run_pipeline.py --config configs/full_pipeline_template.yaml
+```
 
-- Structural analysis of Pareto representations
-- Paradigm-level comparison of archiving strategies
-- Controlled compression analysis
-- Representation-driven NAS evaluation
-- Practical reduction of retraining cost
-- Deployment-oriented NAS design
+The historical `Seeds/` and `Results/` directories are preserved, but the clean pipeline expects an explicit solution-cloud CSV. If you reconstruct the cloud from historical seed files, save it as a CSV matching the documented format.
+
+## Troubleshooting
+
+`ModuleNotFoundError: monas_archiving`
+
+Run `pip install -e .`, or execute the scripts from the repository root.
+
+`Input CSV is missing required columns`
+
+Check the config column names against your CSV. Required columns are defined by `architecture_id_column`, `chromosome_column`, and `objectives`.
+
+`Hypervolume supports exactly two objectives`
+
+The current cleaned implementation supports two-objective hypervolume because the project focuses on PSNR and parameter count.
+
+Legacy scripts fail because of local paths
+
+Some original scripts contain machine-specific paths from the historical research environment. Prefer the cleaned `scripts/` pipeline for new runs, or adapt the legacy paths manually.
 
 ## Citation
 
-If you use this code or framework in your research, please cite:
-
-@article{Archiving2026OfflineArchiving,
-title = {An Offline Analysis of Pareto Archiving Strategies in Multiobjective Neural Architecture Search for Super-Resolution Image Restoration},
-author = {Sarmiento-Rosales, Sergio et al.},
-journal = {TBD},
-year = {2026}
+```bibtex
+@article{SarmientoRosales2026OfflineArchiving,
+  title = {An Offline Analysis of Pareto Archiving Strategies in Multiobjective Neural Architecture Search for Super-Resolution Image Restoration},
+  author = {Sarmiento-Rosales, Sergio and others},
+  journal = {TBD},
+  year = {2026}
 }
+```
 
+## License
+
+This repository is released under the MIT License. See [LICENSE](LICENSE).
+
+## Contact
+
+Open an issue on GitHub for questions, reproduction problems, or documentation gaps:
+
+https://github.com/SergioSarmientoRosales/MoNAS-ArchivingStrategies/issues

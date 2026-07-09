@@ -1,0 +1,31 @@
+run_name: toy_example
+input_path: examples/example_input.csv
+output_dir: runs
+architecture_id_column: architecture_id
+chromosome_column: chromosome
+deduplication_key: architecture_id
+normalization: minmax
+seed: 7
+objectives:
+  - column: psnr
+    direction: maximize
+  - column: params
+    direction: minimize
+archivers:
+  - name: pq
+  - name: hv
+  - name: r2
+  - name: crowding
+  - name: grid
+    bins: 4
+  - name: epsilon
+    eps: 0.20
+  - name: tight1
+  - name: kmeans
+    iters: 30
+  - name: entropy
+    bins: 4
+truncation_sizes: [3, 5]
+indicators: [igd_plus, hypervolume, r2, epsilon, hausdorff]
+hv_reference_point: [1.1, 1.1]
+plot: true

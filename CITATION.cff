@@ -1,0 +1,17 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite the associated work."
+title: "MoNAS-ArchivingStrategies"
+type: software
+license: "MIT"
+authors:
+  - family-names: "Sarmiento-Rosales"
+    given-names: "Sergio"
+repository-code: "https://github.com/SergioSarmientoRosales/MoNAS-ArchivingStrategies"
+preferred-citation:
+  type: article
+  title: "An Offline Analysis of Pareto Archiving Strategies in Multiobjective Neural Architecture Search for Super-Resolution Image Restoration"
+  authors:
+    - family-names: "Sarmiento-Rosales"
+      given-names: "Sergio"
+  journal: "TBD"
+  year: 2026

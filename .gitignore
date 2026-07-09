@@ -1,0 +1,32 @@
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+*.egg-info/
+.venv/
+venv/
+env/
+
+# Generated outputs from the cleaned pipeline
+runs/**
+!runs/
+!runs/README.md
+
+# Local data staging
+data/**
+!data/
+!data/README.md
+
+# Notebook and editor artifacts
+.ipynb_checkpoints/
+.idea/
+.vscode/
+
+# Operating-system files
+.DS_Store
+Thumbs.db
+
+# Logs and temporary files
+*.log
+*.tmp
+*.temp
