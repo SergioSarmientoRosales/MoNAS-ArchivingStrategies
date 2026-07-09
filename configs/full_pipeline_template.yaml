@@ -1,0 +1,32 @@
+# Template for the full offline analysis. Copy this file before editing.
+run_name: full_pipeline
+input_path: data/full_solution_cloud.csv
+output_dir: runs
+architecture_id_column: architecture_id
+chromosome_column: chromosome
+deduplication_key: architecture_id
+normalization: minmax
+seed: 1
+objectives:
+  - column: psnr
+    direction: maximize
+  - column: params
+    direction: minimize
+archivers:
+  - name: pq
+  - name: hv
+  - name: r2
+  - name: crowding
+  - name: grid
+    bins: 25
+  - name: epsilon
+    eps: 0.05
+  - name: tight1
+  - name: kmeans
+    iters: 100
+  - name: entropy
+    bins: 25
+truncation_sizes: [10, 15, 25, 50]
+indicators: [igd_plus, hypervolume, r2, epsilon, hausdorff]
+hv_reference_point: [1.1, 1.1]
+plot: true
